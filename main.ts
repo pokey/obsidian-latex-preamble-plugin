@@ -1,83 +1,52 @@
-import { App, Modal, Notice, Plugin, PluginSettingTab, Setting } from 'obsidian';
+import {
+  App,
+  Modal,
+  Notice,
+  Plugin,
+  PluginSettingTab,
+  Setting
+} from "obsidian";
 
 export default class MyPlugin extends Plugin {
-	onload() {
-		console.log('loading plugin');
+  onload() {
+    console.log("loading obsidian-latex-header-plugin");
 
-		this.addRibbonIcon('dice', 'Sample Plugin', () => {
-			new Notice('This is a notice!');
-		});
+    this.addCommand({
+      id: "obsidian-latex-header-plugin-reload-latex",
+      name: "Reload latex header",
+      callback: () => {
+        new Notice("Simple Callback");
+      }
+    });
 
-		this.addStatusBarItem().setText('Status Bar Text');
+    this.addSettingTab(new SettingTab(this.app, this));
 
-		this.addCommand({
-			id: 'open-sample-modal',
-			name: 'Open Sample Modal',
-			// callback: () => {
-			// 	console.log('Simple Callback');
-			// },
-			checkCallback: (checking: boolean) => {
-				let leaf = this.app.workspace.activeLeaf;
-				if (leaf) {
-					if (!checking) {
-						new SampleModal(this.app).open();
-					}
-					return true;
-				}
-				return false;
-			}
-		});
+    MathJax.tex2chtml("\\def\\bongo{{\\mathbb Q}}\n");
+  }
 
-		this.addSettingTab(new SampleSettingTab(this.app, this));
-
-		this.registerEvent(this.app.on('codemirror', (cm: CodeMirror.Editor) => {
-			console.log('codemirror', cm);
-		}));
-
-		this.registerDomEvent(document, 'click', (evt: MouseEvent) => {
-			console.log('click', evt);
-		});
-
-		this.registerInterval(window.setInterval(() => console.log('setInterval'), 5 * 60 * 1000));
-	}
-
-	onunload() {
-		console.log('unloading plugin');
-	}
+  onunload() {
+    console.log("unloading obsidian-latex-header-plugin");
+  }
 }
 
-class SampleModal extends Modal {
-	constructor(app: App) {
-		super(app);
-	}
+class SettingTab extends PluginSettingTab {
+  display(): void {
+    let { containerEl } = this;
 
-	onOpen() {
-		let {contentEl} = this;
-		contentEl.setText('Woah!');
-	}
+    containerEl.empty();
 
-	onClose() {
-		let {contentEl} = this;
-		contentEl.empty();
-	}
-}
+    containerEl.createEl("h2", { text: "Settings for my awesome plugin." });
 
-class SampleSettingTab extends PluginSettingTab {
-	display(): void {
-		let {containerEl} = this;
-
-		containerEl.empty();
-
-		containerEl.createEl('h2', {text: 'Settings for my awesome plugin.'});
-
-		new Setting(containerEl)
-			.setName('Setting #1')
-			.setDesc('It\'s a secret')
-			.addText(text => text.setPlaceholder('Enter your secret')
-				.setValue('')
-				.onChange((value) => {
-					console.log('Secret: ' + value);
-				}));
-
-	}
+    new Setting(containerEl)
+      .setName("Setting #1")
+      .setDesc("It's a secret")
+      .addText(text =>
+        text
+          .setPlaceholder("Enter your secret")
+          .setValue("")
+          .onChange(value => {
+            console.log("Secret: " + value);
+          })
+      );
+  }
 }
