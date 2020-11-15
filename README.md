@@ -1,46 +1,41 @@
 ## Obsidian latex preamble plugin
 
-This is a plugin for Obsidian (https://obsidian.md) that creates a global Latex
-preamble.
+This is a plugin for [Obsidian](https://obsidian.md/) that will include a
+global Latex preamble in all docs.  Useful for defining Latex commands.
 
-This project uses Typescript to provide type checking and documentation.
-The repo depends on the latest plugin API (obsidian.d.ts) in Typescript Definition format, which contains TSDoc comments describing what it does.
+## Usage
 
-**Note:** The Obsidian API is still in early alpha and is subject to change at any time!
+Once installed, this plugin will look for a file called `preamble.sty`, and
+anything defined in this file will be available in any document.  For example:
 
-This sample plugin demonstrates some of the basic functionality the plugin API can do.
-- Changes the default font color to red using `styles.css`.
-- Adds a ribbon icon, which shows a Notice when clicked.
-- Adds a command "Open Sample Modal" which opens a Modal.
-- Adds a plugin setting tab to the settings page.
-- Registers a global click event and output 'click' to the console.
-- Registers a global interval which logs 'setInterval' to the console.
+```latex
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\norm}[2]{||#2||_{#1}}
+```
 
+## Features
 
-### Releasing new releases
+- Loads preamble at startup
+- Enables command to reload preamble
 
-- Update your `manifest.json` with your new version number, such as `1.0.1`, and the minimum Obsidian version required for your latest release.
-- Update your `versions.json` file with `"new-plugin-version": "minimum-obsidian-version"` so older versions of Obsidian can download an older version of your plugin that's compatible.
-- Create new GitHub release using your new version number as the "Tag version". Use the exact version number, don't include a prefix `v`. See here for an example: https://github.com/obsidianmd/obsidian-sample-plugin/releases
-- Upload the files `manifest.json`, `main.js`, `styles.css` as binary attachments.
-- Publish the release.
+## Compatibility
 
-### Adding your plugin to the community plugin list
+`obsidian-latex-preamble-plugin` currently requires Obsidian v0.9.9 or above to work
+properly.
 
-- Publish an initial version.
-- Make sure you have a `README.md` file in the root of your repo.
-- Make a pull request at https://github.com/obsidianmd/obsidian-releases to add your plugin.
+## Installation
 
-### How to use
+You can install the plugin via the Community Plugins tab within Obsidian. Just
+search for "Latex preamble".
 
-- Clone this repo.
-- `npm i` or `yarn` to install dependencies
-- `npm run dev` to start compilation in watch mode.
+### Manual Installation
 
-### Manually installing the plugin
+You can install the plugin manually by downloading the `zip` of the latest
+Github Release. Unzip the contents into your
+`<vault>/.obsidian/plugins/obsidian-latex-preamble-plugin` directory. [More
+info](https://forum.obsidian.md/t/plugins-mini-faq/7737).
 
-- Copy over `main.js`, `styles.css`, `manifest.json` to your vault `VaultFolder/.obsidian/plugins/your-plugin-id/`.
-
-### API Documentation
-
-See https://github.com/obsidianmd/obsidian-api
+## Todo
+- [ ] Auto-reload preamble
+- [ ] Support custom path for preamble file
