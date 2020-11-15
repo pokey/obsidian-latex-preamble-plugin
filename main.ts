@@ -4,49 +4,35 @@ import {
   Notice,
   Plugin,
   PluginSettingTab,
-  Setting
+  Setting,
+  TFile
 } from "obsidian";
 
+const DEFAULT_PREAMBLE_PATH = "preamble.sty";
+
 export default class MyPlugin extends Plugin {
+  async reload_preamble() {
+    const file = this.app.vault.getAbstractFileByPath(DEFAULT_PREAMBLE_PATH);
+    const content = await this.app.vault.read(file);
+    MathJax.tex2chtml(content);
+  }
+
   onload() {
     console.log("loading obsidian-latex-header-plugin");
 
     this.addCommand({
       id: "obsidian-latex-header-plugin-reload-latex",
-      name: "Reload latex header",
+      name: "Reload latex preamble",
       callback: () => {
-        new Notice("Simple Callback");
+        this.reload_preamble();
+        new Notice("Reloaded Latex preamble");
       }
     });
 
-    this.addSettingTab(new SettingTab(this.app, this));
-
-    MathJax.tex2chtml("\\def\\bongo{{\\mathbb Q}}\n");
+    this.reload_preamble();
   }
 
   onunload() {
     console.log("unloading obsidian-latex-header-plugin");
-  }
-}
-
-class SettingTab extends PluginSettingTab {
-  display(): void {
-    let { containerEl } = this;
-
-    containerEl.empty();
-
-    containerEl.createEl("h2", { text: "Settings for my awesome plugin." });
-
-    new Setting(containerEl)
-      .setName("Setting #1")
-      .setDesc("It's a secret")
-      .addText(text =>
-        text
-          .setPlaceholder("Enter your secret")
-          .setValue("")
-          .onChange(value => {
-            console.log("Secret: " + value);
-          })
-      );
   }
 }
