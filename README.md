@@ -1,7 +1,7 @@
-## Obsidian latex header plugin
+## Obsidian latex preamble plugin
 
 This is a plugin for Obsidian (https://obsidian.md) that creates a global Latex
-header.
+preamble.
 
 This project uses Typescript to provide type checking and documentation.
 The repo depends on the latest plugin API (obsidian.d.ts) in Typescript Definition format, which contains TSDoc comments describing what it does.

@@ -18,10 +18,10 @@ export default class MyPlugin extends Plugin {
   }
 
   onload() {
-    console.log("loading obsidian-latex-header-plugin");
+    console.log("loading obsidian-latex-preamble-plugin");
 
     this.addCommand({
-      id: "obsidian-latex-header-plugin-reload-latex",
+      id: "obsidian-latex-preamble-plugin-reload-latex",
       name: "Reload latex preamble",
       callback: () => {
         this.reload_preamble();
@@ -33,6 +33,6 @@ export default class MyPlugin extends Plugin {
   }
 
   onunload() {
-    console.log("unloading obsidian-latex-header-plugin");
+    console.log("unloading obsidian-latex-preamble-plugin");
   }
 }
