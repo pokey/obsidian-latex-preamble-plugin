@@ -5,7 +5,7 @@ const DEFAULT_PREAMBLE_PATH = "preamble.sty";
 export default class MyPlugin extends Plugin {
   async reload_preamble() {
     const file = this.app.vault.getAbstractFileByPath(DEFAULT_PREAMBLE_PATH);
-    console.log(`Loading preample from ${file}`);
+    console.log(`Loading preamble from ${file}`);
     const content = await this.app.vault.read(file);
     MathJax.tex2chtml(content);
   }
