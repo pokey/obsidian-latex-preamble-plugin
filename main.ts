@@ -11,13 +11,26 @@ import {
 const DEFAULT_PREAMBLE_PATH = "preamble.sty";
 
 export default class MyPlugin extends Plugin {
-  async reload_preamble() {
+  get_preamble = async () => {
     const file = this.app.vault.getAbstractFileByPath(DEFAULT_PREAMBLE_PATH);
-    const content = await this.app.vault.read(file);
-    MathJax.tex2chtml(content);
+    const preamble = await this.app.vault.read(file);
+    return preamble;
   }
 
-  onload() {
+  load_preamble = async () => {
+    const preamble = await this.get_preamble();
+    MathJax.startup.ready = () => {
+      MathJax.startup.defaultReady();
+      MathJax.tex2chtml(preamble);
+    }
+  }
+
+  reload_preamble = async () => {
+    const preamble = await this.get_preamble();
+    MathJax.tex2chtml(preamble);
+  }
+
+  async onload() {
     console.log("loading obsidian-latex-preamble-plugin");
 
     this.addCommand({
@@ -29,7 +42,7 @@ export default class MyPlugin extends Plugin {
       }
     });
 
-    this.reload_preamble();
+    this.app.workspace.on('layout-ready', this.load_preamble);
   }
 
   onunload() {
