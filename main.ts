@@ -30,7 +30,7 @@ export default class MyPlugin extends Plugin {
     MathJax.tex2chtml(preamble);
   }
 
-  async onload() {
+  onload() {
     console.log("loading obsidian-latex-preamble-plugin");
 
     this.addCommand({
