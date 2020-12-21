@@ -1,3 +1,5 @@
+# Deprecated: please use https://github.com/xldenis/obsidian-latex instead
+
 ## Obsidian latex preamble plugin
 
 This is a plugin for [Obsidian](https://obsidian.md/) that will include a
